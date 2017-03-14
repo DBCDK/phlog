@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright Dansk Bibliotekscenter a/s. Licensed under GNU 3
-  ~ See license text in LICENSE.txt
+  ~ See license text in LICENSE.txt or at https://opensource.dbc.dk/licenses/gpl-3.0/
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"

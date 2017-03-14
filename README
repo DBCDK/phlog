@@ -1,0 +1,9 @@
+Copyright Dansk Bibliotekscenter a/s. Licensed under GNU 3
+See license text in LICENSE.txt  or at https://opensource.dbc.dk/licenses/gpl-3.0/
+
+Log over Professionshøjskolebiblioteker (PH) records
+
+Documentation
+-------------
+
+A project wishing to utilize the API must provide a DataSource resource via JNDI name jdbc/phlog.

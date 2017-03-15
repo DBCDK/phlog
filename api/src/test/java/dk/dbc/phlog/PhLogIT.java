@@ -28,7 +28,11 @@ import java.sql.Statement;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.eclipse.persistence.config.PersistenceUnitProperties.JDBC_DRIVER;
 import static org.eclipse.persistence.config.PersistenceUnitProperties.JDBC_PASSWORD;
@@ -108,6 +112,30 @@ public class PhLogIT {
 
         assertThat("timeOfLastModification updated", phLogEntry.getTimeOfLastModification().toInstant()
                 .isAfter(Instant.now().minus(Duration.ofSeconds(1))), is(true));
+    }
+
+    @Test
+    public void getEntriesModifiedBetween() {
+        final PhLogEntry entry2 = entityManager.find(PhLogEntry.class, new PhLogEntry.Key()
+                .withAgencyId(123456)
+                .withBibliographicRecordId("testId2"));
+        final PhLogEntry entry4 = entityManager.find(PhLogEntry.class, new PhLogEntry.Key()
+                .withAgencyId(123456)
+                .withBibliographicRecordId("testId4"));
+
+        final PhLog phLog = phLog();
+        final PhLog.ResultSet<PhLogEntry> resultSet = phLog.getEntriesModifiedBetween(
+                entry2.getTimeOfLastModification().toInstant(),
+                entry4.getTimeOfLastModification().toInstant());
+        
+        final Set<String> expectedIds = Stream.of("testId2", "testId3").collect(Collectors.toSet());
+        final Set<String> actualIds = new HashSet<>();
+        resultSet.forEach(entry -> actualIds.add(entry.getKey().getBibliographicRecordId()));
+        assertThat(actualIds, is(expectedIds));
+    }
+
+    private PhLog phLog() {
+        return new PhLog(entityManager);
     }
 
     private <T> T transaction_scoped(CodeBlockExecution<T> codeBlock) {

@@ -8,6 +8,8 @@ package dk.dbc.phlog.dto;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -15,7 +17,15 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "entry")
+@NamedQueries({
+    @NamedQuery(name = PhLogEntry.GET_ENTRIES_WITH_TIME_OF_LAST_MODIFICATION_IN_INTERVAL_QUERY_NAME,
+                query = PhLogEntry.GET_ENTRIES_WITH_TIME_OF_LAST_MODIFICATION_IN_INTERVAL_QUERY)
+})
 public class PhLogEntry {
+    public static final String GET_ENTRIES_WITH_TIME_OF_LAST_MODIFICATION_IN_INTERVAL_QUERY_NAME = "PhLogEntry.getEntriesModifiedBetween";
+    public static final String GET_ENTRIES_WITH_TIME_OF_LAST_MODIFICATION_IN_INTERVAL_QUERY =
+            "SELECT logEntry FROM PhLogEntry logEntry WHERE logEntry.timeOfLastModification >= :after AND logEntry.timeOfLastModification < :before";
+
     @EmbeddedId
     private Key key;
     private Boolean deleted;

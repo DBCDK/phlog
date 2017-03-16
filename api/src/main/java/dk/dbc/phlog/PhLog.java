@@ -44,6 +44,10 @@ public class PhLog {
         return new ResultSet<>(query);
     }
 
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
     /**
      * This class represents a one-time iteration of a phlog repository result set
      */

@@ -98,5 +98,29 @@ public class PhLogEntry {
                     ", bibliographicRecordId='" + bibliographicRecordId + '\'' +
                     '}';
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            Key key = (Key) o;
+
+            if (agencyId != null ? !agencyId.equals(key.agencyId) : key.agencyId != null) {
+                return false;
+            }
+            return bibliographicRecordId != null ? bibliographicRecordId.equals(key.bibliographicRecordId) : key.bibliographicRecordId == null;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = agencyId != null ? agencyId.hashCode() : 0;
+            result = 31 * result + (bibliographicRecordId != null ? bibliographicRecordId.hashCode() : 0);
+            return result;
+        }
     }
 }

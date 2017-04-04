@@ -5,6 +5,8 @@
 
 package dk.dbc.phlog.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -14,6 +16,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.Map;
 
 @Entity
 @Table(name = "entry")
@@ -31,6 +34,10 @@ public class PhLogEntry {
     private Boolean deleted;
     private Timestamp timeOfLastModification;
 
+    @Column(columnDefinition = "jsonb")
+    @Convert(converter = StatusMapConverter.class)
+    private Map<String, Integer> holdingsStatusMap;
+
     public Key getKey() {
         return key;
     }
@@ -46,6 +53,15 @@ public class PhLogEntry {
 
     public PhLogEntry withDeleted(Boolean deleted) {
         this.deleted = deleted;
+        return this;
+    }
+
+    public Map<String, Integer> getHoldingsStatusMap() {
+        return holdingsStatusMap;
+    }
+
+    public PhLogEntry withHoldingsStatusMap(Map<String, Integer> holdingsStatusMap) {
+        this.holdingsStatusMap = holdingsStatusMap;
         return this;
     }
 

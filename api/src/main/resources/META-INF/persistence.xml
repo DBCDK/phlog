@@ -11,12 +11,14 @@
   <persistence-unit name="phLogPU" transaction-type="JTA">
     <jta-data-source>jdbc/phlog</jta-data-source>
     <class>dk.dbc.phlog.dto.PhLogEntry</class>
+    <class>dk.dbc.phlog.dto.StatusMapConverter</class>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="none"/>
     </properties>
   </persistence-unit>
   <persistence-unit name="phLogIT" transaction-type="RESOURCE_LOCAL">
     <class>dk.dbc.phlog.dto.PhLogEntry</class>
+    <class>dk.dbc.phlog.dto.StatusMapConverter</class>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="none"/>
       <property name="eclipselink.logging.logger" value="org.eclipse.persistence.logging.DefaultSessionLog"/>

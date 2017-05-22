@@ -14,10 +14,13 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.sql.DataSource;
 
 @Startup
 @Singleton
+@TransactionManagement(TransactionManagementType.BEAN)
 public class PhLogDatabaseMigrator {
     private static final Logger LOGGER = LoggerFactory.getLogger(PhLogDatabaseMigrator.class);
 
